@@ -15,4 +15,4 @@ class Client(models.Model):
     phone = PhoneNumberField(blank=False, region='RU')
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.patronymic}'
+        return f'Name {self.full_name}'
