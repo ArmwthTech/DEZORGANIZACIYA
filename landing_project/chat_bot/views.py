@@ -17,6 +17,7 @@ class CreateClientViewset(ViewSet):
     http_method_names = ['post',]
 
     def create(self, request):
+        print(request.data)
         try:
             PhoneNumber.from_string(request.data['phone'], region='RU')
         except:

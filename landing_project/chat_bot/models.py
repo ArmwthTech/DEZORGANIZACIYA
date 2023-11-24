@@ -3,16 +3,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 class Client(models.Model):
-    age = models.IntegerField()
-    first_name = models.CharField(max_length=32)
-    last_name = models.CharField(max_length=32)
-    patronymic = models.CharField(max_length=32, default='', blank=True)
+    age = models.IntegerField(blank=True)
+    full_name = models.CharField(blank=True, max_length=128)
     email = models.EmailField()
     date_create = models.DateTimeField(auto_now_add=True)
-    current_profession = models.CharField(max_length=128)
+    current_profession = models.CharField(max_length=128, blank=True)
     #Пока поставил int, надо будет обсудить тип данных для стажа работы
-    work_experience = models.IntegerField()
-    salary = models.IntegerField()
+    work_experience = models.IntegerField(blank=True)
+    salary = models.IntegerField(blank=True)
     #https://django-phonenumber-field.readthedocs.io/en/latest/index.html
     phone = PhoneNumberField(blank=False, region='RU')
 
