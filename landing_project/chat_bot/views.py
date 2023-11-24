@@ -9,6 +9,7 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from phonenumber_field.phonenumber import PhoneNumber
+from rest_framework.renderers import JSONRenderer
 # Create your views here.
 
 class CreateClientViewset(ViewSet):
@@ -21,15 +22,18 @@ class CreateClientViewset(ViewSet):
         try:
             PhoneNumber.from_string(request.data['phone'], region='RU')
         except:
-            return Response('Неверный номер',status=status.HTTP_400_BAD_REQUEST)
+            data = {'status': 400, 'text': 'Неправильный номер', }
+            return JSONRenderer().render(data)
         client = ClientForm(request.data)
 
 
         if client.is_valid():
             client.save()
-            return Response(status=status.HTTP_201_CREATED)
+            data = {'status': 201, }
+            return JSONRenderer().render(data)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            data = {'status': 400, }
+            return JSONRenderer().render(data)
 
 class ClientCreate(CreateView):
     form_class = ClientForm
