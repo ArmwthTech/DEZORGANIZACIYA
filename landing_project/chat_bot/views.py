@@ -15,28 +15,26 @@ from rest_framework.renderers import JSONRenderer
 class CreateClientViewset(ViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    http_method_names = ['post',]
+    http_method_names = ['post', 'get']
 
+    def list(self, request):
+        client = Client.objects.create(full_name='process')
+        client = ClientSerializer(client)
+        return Response(data=client.data['id'])
     def create(self, request):
         print(request.data)
         try:
             PhoneNumber.from_string(request.data['phone'], region='RU')
         except:
-            data = {'status': 400}
-            data = JSONRenderer.render(data)
-            return Response(data,status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         client = ClientForm(request.data)
 
 
         if client.is_valid():
             client.save()
-            data = {'status': 400}
-            data = JSONRenderer.render(data)
-            return Response(data=data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         else:
-            data = {'status':400}
-            data = JSONRenderer.render(data)
-            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class ClientCreate(CreateView):
     form_class = ClientForm
