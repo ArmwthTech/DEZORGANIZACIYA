@@ -23,10 +23,6 @@ class CreateClientViewset(ViewSet):
         return Response(data=client.data['id'])
     def create(self, request):
         print(request.data)
-        try:
-            PhoneNumber.from_string(request.data['phone'], region='RU')
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
         client = ClientForm(request.data)
 
 
