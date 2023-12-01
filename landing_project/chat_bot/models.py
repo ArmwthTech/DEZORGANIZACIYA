@@ -13,6 +13,5 @@ class Client(models.Model):
     salary = models.IntegerField(blank=True, null=True)
     #https://django-phonenumber-field.readthedocs.io/en/latest/index.html
     phone = PhoneNumberField(blank=True, null=True, region='RU')
-
     def __str__(self):
         return f'Name {self.full_name}'
