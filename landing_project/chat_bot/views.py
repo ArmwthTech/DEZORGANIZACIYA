@@ -45,7 +45,7 @@ class Chat_bot_edit_client(ViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     http_method_names = ['post']
-    #renderer_classes = [JSONRenderer]
+    renderer_classes = [JSONRenderer]
 
     def create(self, request):
         bd_file = open('bd.txt', 'r+', encoding='utf-8')
